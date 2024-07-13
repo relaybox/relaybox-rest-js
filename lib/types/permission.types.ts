@@ -2,6 +2,6 @@ export const allowedPermissions = ['subscribe', 'publish', 'presence', 'metrics'
 
 export type Permission = (typeof allowedPermissions)[number];
 
-export interface DsPermissions {
+export interface Permissions {
   [room: string]: string[];
 }

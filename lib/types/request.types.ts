@@ -1,8 +1,8 @@
-export interface DsApiData {
+export interface ApiData {
   message?: string;
 }
 
-export interface DsResponse<T> {
+export interface FormattedResponse<T> {
   status: number;
   data: T;
   message?: string;

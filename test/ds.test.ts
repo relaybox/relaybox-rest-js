@@ -1,7 +1,7 @@
 import { vi, describe, it, expect, afterEach, beforeAll, afterAll, beforeEach } from 'vitest';
 import { setupServer } from 'msw/node';
 import { HttpResponse, http } from 'msw';
-import { Ds } from '../lib/ds';
+import { Relaybox } from '../lib/relaybox';
 import jwt from 'jsonwebtoken';
 import { ExtendedJwtPayload } from '../lib/types/jwt.types';
 import { generateHmacSignature } from '../lib/security';
@@ -23,7 +23,7 @@ function isJwtExpired(token: string, secret: string) {
 }
 
 describe('Ds', () => {
-  let ds: Ds;
+  let relaybox: Relaybox;
 
   beforeAll(() => {
     vi.useFakeTimers();
@@ -34,7 +34,7 @@ describe('Ds', () => {
   });
 
   beforeEach(() => {
-    ds = new Ds({ apiKey: mockApiKey });
+    relaybox = new Relaybox({ apiKey: mockApiKey });
   });
 
   afterEach(() => {
@@ -53,7 +53,7 @@ describe('Ds', () => {
       };
 
       const [keyName] = mockApiKey.split(':');
-      const { token, expiresIn } = ds.generateTokenResponse(params);
+      const { token, expiresIn } = relaybox.generateTokenResponse(params);
 
       expect(expiresIn).toEqual(tokenExpirySecs);
 
@@ -72,7 +72,7 @@ describe('Ds', () => {
         expiresIn
       };
 
-      const { token } = ds.generateTokenResponse(params);
+      const { token } = relaybox.generateTokenResponse(params);
 
       vi.advanceTimersByTime((expiresIn - 1) * 1000);
       expect(isJwtExpired(token, mockSecretKey)).toBe(false);
@@ -85,7 +85,7 @@ describe('Ds', () => {
       const defaultExpirySecs = 900;
       const params = {};
 
-      const { token } = ds.generateTokenResponse(params);
+      const { token } = relaybox.generateTokenResponse(params);
 
       vi.advanceTimersByTime((defaultExpirySecs - 1) * 1000);
       expect(isJwtExpired(token, mockSecretKey)).toBe(false);
@@ -138,7 +138,7 @@ describe('Ds', () => {
           })
         );
 
-        await expect(ds.publish(mockRoomid, mockEvent, mockPayload)).resolves.toEqual(
+        await expect(relaybox.publish(mockRoomid, mockEvent, mockPayload)).resolves.toEqual(
           expect.objectContaining({
             timestamp: new Date().toISOString(),
             signature: mockSignature
@@ -173,7 +173,7 @@ describe('Ds', () => {
           })
         );
 
-        await expect(ds.publish(mockRoomid, mockEvent, mockPayload)).rejects.toThrow(
+        await expect(relaybox.publish(mockRoomid, mockEvent, mockPayload)).rejects.toThrow(
           HTTPRequestError
         );
       });

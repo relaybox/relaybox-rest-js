@@ -1,3 +1,3 @@
-export interface DsConfig {
+export interface RelayboxOptions {
   apiKey: string;
 }

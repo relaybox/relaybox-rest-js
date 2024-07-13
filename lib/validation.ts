@@ -1,5 +1,5 @@
 import { ValidationError } from './errors';
-import { DsPermissions, Permission, allowedPermissions } from './types/permission.types';
+import { Permissions, Permission, allowedPermissions } from './types/permission.types';
 
 export function validateParams(params: Record<string, any>, requiredParams: string[]) {
   const missingParams = checkMissingParams(params, requiredParams);
@@ -16,7 +16,7 @@ export function checkMissingParams(
   return requiredParams.filter((param) => !params[param]);
 }
 
-export function validatePermissions(permissions: any): permissions is DsPermissions {
+export function validatePermissions(permissions: any): permissions is Permissions {
   if (!permissions || (Array.isArray(permissions) && permissions[0] === '*')) {
     return true;
   }

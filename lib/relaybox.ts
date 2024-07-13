@@ -2,22 +2,18 @@ import { generateAuthToken, generateHmacSignature } from './security';
 import { request } from './request';
 import { ValidationError } from './errors';
 import { ExtendedJwtPayload } from './types/jwt.types';
-import {
-  DsPublishResponseData,
-  DsTokenResponse,
-  DsTokenResponseParams
-} from './types/response.types';
-import { DsConfig } from './types/config.types';
+import { PublishResponseData, TokenResponse, TokenResponseParams } from './types/response.types';
+import { RelayboxOptions } from './types/config.types';
 import { validatePermissions, validateParams } from './validation';
 
 const DS_EVENTS_SERVICE_URL = `http://localhost:4004/dev`;
 const DEFAULT_TOKEN_EXPIRY_SECS = 900;
 
-export class Ds {
+export class Relaybox {
   private apiKeyParts: [string, string];
   private dsEventsServiceUrl: string = DS_EVENTS_SERVICE_URL;
 
-  constructor({ apiKey }: DsConfig) {
+  constructor({ apiKey }: RelayboxOptions) {
     validateParams({ apiKey }, ['apiKey']);
     this.apiKeyParts = this.getApiKeyParts(apiKey);
   }
@@ -26,7 +22,7 @@ export class Ds {
     clientId,
     expiresIn = DEFAULT_TOKEN_EXPIRY_SECS,
     permissions
-  }: DsTokenResponseParams): DsTokenResponse {
+  }: TokenResponseParams): TokenResponse {
     validatePermissions(permissions);
 
     const [keyName, secretKey] = this.apiKeyParts;
@@ -47,11 +43,7 @@ export class Ds {
     };
   }
 
-  async publish(
-    roomId: string | string[],
-    event: string,
-    data: any
-  ): Promise<DsPublishResponseData> {
+  async publish(roomId: string | string[], event: string, data: any): Promise<PublishResponseData> {
     validateParams({ roomId, event, data }, ['roomId', 'event', 'data']);
 
     const [requestBody, requestSignature, publicKey] = this.prepareRequestParams(
@@ -69,7 +61,7 @@ export class Ds {
       body: requestBody
     };
 
-    const response = await request<DsPublishResponseData>(this.dsEventsServiceUrl, requestParams);
+    const response = await request<PublishResponseData>(this.dsEventsServiceUrl, requestParams);
 
     return response.data;
   }

@@ -1,18 +1,18 @@
-import { DsPermissions, Permission } from './permission.types';
+import { Permissions, Permission } from './permission.types';
 
-export interface DsTokenResponseParams {
+export interface TokenResponseParams {
   clientId?: string | string[];
   expiresIn?: number;
-  permissions?: Permission[] | DsPermissions;
+  permissions?: Permission[] | Permissions;
 }
 
-export interface DsTokenResponse {
+export interface TokenResponse {
   token: string;
   // signature: string;
   expiresIn: number;
 }
 
-export interface DsPublishResponseData {
+export interface PublishResponseData {
   timestamp: string;
   signature: string;
 }
