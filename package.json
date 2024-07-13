@@ -1,0 +1,22 @@
+{
+  "name": "@relaybox/rest",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.12.12",
+    "mockdate": "^3.0.5",
+    "msw": "^2.3.1",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}
