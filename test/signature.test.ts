@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { ValidationError } from '../lib/errors';
-import { generateHmacSignature, generateAuthToken } from '../lib/security';
+import { generateHmacSignature, generateAuthToken } from '../lib/signature';
 
 const mockSigningKey = '12345';
 

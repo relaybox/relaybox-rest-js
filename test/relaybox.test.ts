@@ -4,7 +4,7 @@ import { HttpResponse, http } from 'msw';
 import { Relaybox } from '../lib/relaybox';
 import jwt from 'jsonwebtoken';
 import { ExtendedJwtPayload } from '../lib/types/jwt.types';
-import { generateHmacSignature } from '../lib/security';
+import { generateHmacSignature } from '../lib/signature';
 import { HTTPRequestError } from '../lib/errors';
 
 const server = setupServer();

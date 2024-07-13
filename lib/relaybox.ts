@@ -1,4 +1,4 @@
-import { generateAuthToken, generateHmacSignature } from './security';
+import { generateAuthToken, generateHmacSignature } from './signature';
 import { request } from './request';
 import { ValidationError } from './errors';
 import { ExtendedJwtPayload } from './types/jwt.types';
