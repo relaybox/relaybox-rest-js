@@ -3,18 +3,19 @@ import { request } from './request';
 import { ValidationError } from './errors';
 import { ExtendedJwtPayload } from './types/jwt.types';
 import { PublishResponseData, TokenResponse, TokenResponseParams } from './types/response.types';
-import { RelayboxOptions } from './types/config.types';
+import { RelayBoxOptions } from './types/config.types';
 import { validatePermissions, validateParams } from './validation';
 
 // const DS_EVENTS_SERVICE_URL = `http://localhost:4004/dev`;
+// const DS_EVENTS_SERVICE_URL = `https://events.dev.relaybox-services.net`;
 const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
 const DEFAULT_TOKEN_EXPIRY_SECS = 900;
 
-export class Relaybox {
+export class RelayBox {
   private apiKeyParts: [string, string];
   private dsEventsServiceUrl: string = DS_EVENTS_SERVICE_URL;
 
-  constructor({ apiKey }: RelayboxOptions) {
+  constructor({ apiKey }: RelayBoxOptions) {
     validateParams({ apiKey }, ['apiKey']);
     this.apiKeyParts = this.getApiKeyParts(apiKey);
   }

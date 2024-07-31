@@ -1,3 +1,3 @@
-export interface RelayboxOptions {
+export interface RelayBoxOptions {
   apiKey: string;
 }
