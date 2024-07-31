@@ -26,7 +26,7 @@ Once you have successfully installed the library, the following API reference ap
 
 Instantiate the Relaybox class to enable usage of the server-side SDK.
 
-```
+```typescript
 const relayBox = new RelayBox();
 
 class RelayBox {
@@ -40,7 +40,7 @@ class RelayBox {
 
 RelayBox class constructor options:
 
-```
+```typescript
 interface RelayBoxOptions {
   apiKey?: string;
   region: string;
@@ -53,17 +53,11 @@ interface TokenResponseParams {
 }
 
 interface TokenResponse {
-    token: string;
-    expiresIn: number;
+  token: string;
+  expiresIn: number;
 }
 
-const allowedPermissions: readonly [
-  "subscribe",
-  "publish",
-  "presence",
-  "metrics",
-  "*"
-];
+const allowedPermissions: readonly ['subscribe', 'publish', 'presence', 'metrics', '*'];
 
 type Permission = (typeof allowedPermissions)[number];
 
@@ -111,7 +105,7 @@ interface Permissions {
 
 Responsible for generating a secure token to be sent as an HTTP response, which can be exchanged for access to real-time services via <Link href="/docs/api-reference/relaybox-client">@relaybox/client</Link>. To learn more about auth tokens, please refer to the <Link href="/docs/authentication/auth-tokens">Auth Tokens</Link> documentation.
 
-```
+```typescript
 relayBox.generateTokenResponse();
 ```
 
@@ -167,7 +161,7 @@ Returns string in <a href="https://jwt.io" target="blank">JWT</a> format
 
 Example:
 
-```
+```typescript
 // Generate a token response with a clientId and custom expiry
 const tokenResponse = relayBox.generateTokenResponse({
   clientId: 123,
@@ -193,13 +187,13 @@ const tokenResponse = relayBox.generateTokenResponse({
 
 Responsible for publishing an event to a named "room".
 
-```
+```typescript
 relayBox.publish();
 ```
 
 Returns object of type PublishResponseData
 
-```
+```typescript
 interface PublishResponseData {
   timestamp: string;
   signature: string;
@@ -238,7 +232,7 @@ interface PublishResponseData {
 
 Example:
 
-```
+```typescript
 const data = {
   hello: 'world'
 };
