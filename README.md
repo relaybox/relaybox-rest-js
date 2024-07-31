@@ -6,8 +6,6 @@ Welcome to RelayBox.
 
 A free account and [API key](https://relaybox.net/docs/authentication/api-keys#how-to-generate-an-api-key) is required in to use this library. Find more details [here](https://relaybox.net/docs/getting-started#creating-your-first-application).
 
-import Link from 'next/link';
-
 # @relaybox/rest
 
 The purpose of this library is to enable seamless integration between your server-side applications and RelayBox's REST services.
@@ -81,8 +79,8 @@ interface Permissions {
         (required)
       </td>
       <td>
-        Associate an API key with the connection, which you can generate via the{' '}
-        <Link href="/dashboard">dashboard</Link>. To create an API key, first{' '}
+        Associate an API key with the connection, which you can generate via the
+        <Link href="/dashboard">dashboard</Link>. To create an API key, first
         <Link href="/auth/login?authStage=register">register for a free account</Link>.
       </td>
       <td>string</td>
