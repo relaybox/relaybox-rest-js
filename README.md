@@ -1,6 +1,6 @@
 # RelayBox REST SDK
 
-Find the full technical [documention here](https://relaybox.net/docs)
+Find the full technical [documention here](https://relaybox.net/docs/api-reference/relaybox-rest)
 
 Welcome to RelayBox.
 
