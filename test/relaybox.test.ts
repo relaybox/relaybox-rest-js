@@ -8,7 +8,7 @@ import { generateHmacSignature } from '../lib/signature';
 import { HTTPRequestError } from '../lib/errors';
 
 const server = setupServer();
-const mockEventsEndpoint = 'http://localhost:4004/dev';
+const mockEventsEndpoint = `https://events.prod.relaybox-services.net`;
 const mockSecretKey = `abcde`;
 const mockApiKey = `appPid.keyId:${mockSecretKey}`;
 const mockclientId = `12345`;
