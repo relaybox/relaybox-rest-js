@@ -41,7 +41,6 @@ RelayBox class constructor options:
 ```typescript
 interface RelayBoxOptions {
   apiKey?: string;
-  region: string;
 }
 
 interface TokenResponseParams {
@@ -82,17 +81,6 @@ interface Permissions {
         Associate an API key with the connection, which you can generate via the
         <Link href="/dashboard">dashboard</Link>. To create an API key, first
         <Link href="/auth/login?authStage=register">register for a free account</Link>.
-      </td>
-      <td>string</td>
-    </tr>
-    <tr>
-      <td>
-        region <br />
-        (optional)
-      </td>
-      <td>
-        Specify the closest geographical region to your location. When set, the connection will
-        enter the network through this designated edge entry point.
       </td>
       <td>string</td>
     </tr>
