@@ -226,3 +226,7 @@ const data = {
 // Publish an event named 'message' to 'room:one' containing data payload
 const response = relayBox.publish('room:one', 'message', data);
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
