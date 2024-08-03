@@ -8,6 +8,8 @@ Welcome to RelayBox.
 
 In order to use this library, you need to create a free account and [API key](https://relaybox.net/docs/authentication/api-keys). Find more details [here](https://relaybox.net/docs/getting-started).
 
+If you find any issues, please report them [here](https://github.com/relaybox/relaybox-rest-js/issues) or contact support@relaybox.net.
+
 # @relaybox/rest
 
 The purpose of this library is to enable seamless integration between your server-side applications and RelayBox's REST services.
