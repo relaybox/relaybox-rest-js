@@ -1,6 +1,6 @@
 {
   "name": "@relaybox/rest",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "RelayBox REST services SDK. This library includes server-side functionality for generating auth tokens, publishing events and interacting with RelayBox's services.",
   "keywords": [
     "realtime infrastructure",
