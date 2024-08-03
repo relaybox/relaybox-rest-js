@@ -14,15 +14,14 @@
     "event-driven architecture",
     "websocket library",
     "realtime API",
-    "Node.js WebSocket",
+    "nodejs WebSocket",
     "realtime notifications",
     "realtime multiplayer",
     "realtime collaboration",
     "realtime rest api",
     "websocket rest api",
     "server sent events",
-    "nodejs push notifications",
-    "uwebsockets"
+    "nodejs push notifications"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -1,3 +1,5 @@
+![npm version](https://img.shields.io/npm/v/@relaybox/rest)
+
 # RelayBox REST SDK
 
 Find the full technical [documention here](https://relaybox.net/docs/api-reference/relaybox-rest)
