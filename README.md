@@ -22,7 +22,7 @@ Once you have successfully installed the library, the following API reference ap
 
 ## RelayBox Class
 
-Instantiate the Relaybox class to enable usage of the server-side SDK.
+Instantiate a new RelayBox object to enable usage of the server-side SDK.
 
 ```typescript
 const relayBox = new RelayBox();
