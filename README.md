@@ -1,6 +1,6 @@
 ![npm version](https://img.shields.io/npm/v/@relaybox/rest)
 
-# RelayBox REST SDK
+# @relaybox/rest
 
 Find the full technical [documention here](https://relaybox.net/docs/api-reference/relaybox-rest)
 
@@ -9,10 +9,6 @@ Welcome to RelayBox.
 In order to use this library, you need to create a free account and [API key](https://relaybox.net/docs/authentication/api-keys). Find more details [here](https://relaybox.net/docs/getting-started).
 
 If you find any issues, please report them [here](https://github.com/relaybox/relaybox-rest-js/issues) or contact support@relaybox.net.
-
-# @relaybox/rest
-
-The purpose of this library is to enable seamless integration between your server-side applications and RelayBox's REST services.
 
 ## Installation
 
