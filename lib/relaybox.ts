@@ -6,7 +6,9 @@ import { PublishResponseData, TokenResponse, TokenResponseParams } from './types
 import { RelayBoxOptions } from './types/config.types';
 import { validatePermissions, validateParams } from './validation';
 
-const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
+// const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
+// const DS_EVENTS_SERVICE_URL = `https://events.dev.relaybox-services.net`;
+const DS_EVENTS_SERVICE_URL = `http://localhost:4004/dev`;
 const DEFAULT_TOKEN_EXPIRY_SECS = 900;
 
 /**
@@ -102,7 +104,7 @@ export class RelayBox {
     event: string,
     data: any
   ): [string, string, string] {
-    const timestamp = new Date().toISOString();
+    const timestamp = Date.now();
 
     const body = JSON.stringify({
       event,
