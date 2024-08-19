@@ -120,7 +120,7 @@ describe('Ds', () => {
             event: mockEvent,
             roomId: mockRoomid,
             data: mockPayload,
-            timestamp: new Date().toISOString()
+            timestamp: Date.now()
           }),
           mockSecretKey
         );
@@ -131,7 +131,7 @@ describe('Ds', () => {
             const signature = request.headers.get('x-ds-req-signature');
 
             if (publicKey === mockPublicKey && signature === mockSignature) {
-              return HttpResponse.json({ timestamp: new Date().toISOString(), signature });
+              return HttpResponse.json({ timestamp: Date.now(), signature });
             }
 
             return new HttpResponse(null, { status: 401 });
@@ -140,7 +140,7 @@ describe('Ds', () => {
 
         await expect(relayBox.publish(mockRoomid, mockEvent, mockPayload)).resolves.toEqual(
           expect.objectContaining({
-            timestamp: new Date().toISOString(),
+            timestamp: Date.now(),
             signature: mockSignature
           })
         );
@@ -154,7 +154,7 @@ describe('Ds', () => {
             event: mockEvent,
             roomId: mockRoomid,
             data: mockPayload,
-            timestamp: new Date().toISOString()
+            timestamp: Date.now()
           }),
           mockSecretKey
         );
@@ -169,7 +169,7 @@ describe('Ds', () => {
               return new HttpResponse(null, { status: 401 });
             }
 
-            return HttpResponse.json({ timestamp: new Date().toISOString(), signature });
+            return HttpResponse.json({ timestamp: Date.now(), signature });
           })
         );
 

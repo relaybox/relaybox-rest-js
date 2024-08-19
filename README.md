@@ -54,7 +54,7 @@ interface TokenResponse {
   expiresIn: number;
 }
 
-const allowedPermissions: readonly ['subscribe', 'publish', 'presence', 'metrics', '*'];
+const allowedPermissions: readonly ['subscribe', 'publish', 'presence', 'metrics', 'history', '*'];
 
 type Permission = (typeof allowedPermissions)[number];
 

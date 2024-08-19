@@ -1,4 +1,11 @@
-export const allowedPermissions = ['subscribe', 'publish', 'presence', 'metrics', '*'] as const;
+export const allowedPermissions = [
+  'subscribe',
+  'publish',
+  'presence',
+  'metrics',
+  'history',
+  '*'
+] as const;
 
 export type Permission = (typeof allowedPermissions)[number];
 
