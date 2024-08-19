@@ -160,7 +160,8 @@ const permissions = {
     'subscribe',
     'publish',
     'presence',
-    'metrics'
+    'metrics',
+    'history'
   ];
 };
 
