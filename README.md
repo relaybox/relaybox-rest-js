@@ -20,7 +20,7 @@ npm install @relaybox/rest
 
 Once you have successfully installed the library, the following API reference applies.
 
-## RelayBox Class
+## RelayBox Constructor
 
 Instantiate a new RelayBox object to enable usage of the server-side SDK.
 
