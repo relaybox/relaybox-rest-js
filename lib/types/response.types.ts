@@ -10,6 +10,7 @@ export interface TokenResponse {
   token: string;
   // signature: string;
   expiresIn: number;
+  expiresAt: number;
 }
 
 export interface PublishResponseData {

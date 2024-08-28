@@ -6,4 +6,6 @@ export interface ExtendedJwtPayload extends JwtPayload {
   clientId?: string | string[];
   timestamp: string;
   permissions?: Permissions | Permission[];
+  scope?: string;
+  tokenType?: string;
 }

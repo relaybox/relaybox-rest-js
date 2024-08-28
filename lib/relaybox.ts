@@ -6,8 +6,10 @@ import { PublishResponseData, TokenResponse, TokenResponseParams } from './types
 import { RelayBoxOptions } from './types/config.types';
 import { validatePermissions, validateParams } from './validation';
 
-const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
+// const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
+const DS_EVENTS_SERVICE_URL = `http://localhost:4004/dev`;
 const DEFAULT_TOKEN_EXPIRY_SECS = 900;
+const DEFAULT_TOKEN_TYPE = 'id_token';
 
 /**
  * The RelayBox class provides methods to generate authentication tokens and publish events
@@ -46,15 +48,18 @@ export class RelayBox {
     const payload: ExtendedJwtPayload = {
       keyName,
       timestamp,
+      tokenType: DEFAULT_TOKEN_TYPE,
       ...(permissions && { permissions }),
       ...(clientId && clientId != 'null' && { clientId })
     };
 
     const token = generateAuthToken(payload, secretKey, expiresIn);
+    const expiresAt = new Date().getTime() + expiresIn * 1000;
 
     return {
       token,
-      expiresIn
+      expiresIn,
+      expiresAt
     };
   }
 

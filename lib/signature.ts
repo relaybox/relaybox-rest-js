@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { ExtendedJwtPayload } from './types/jwt.types';
 import { SignatureError, TokenError, ValidationError } from './errors';
 
-const JWT_ISSUER = `com.ds`;
+const JWT_ISSUER = `https://relaybox.net`;
 const JWT_HASHING_ALGORITHM = 'HS256';
 const SIGNATURE_HASHING_ALGORITHM = 'sha256';
 const SIGNATURE_BUFFER_ENCODING = 'utf-8';
