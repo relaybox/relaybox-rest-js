@@ -31,7 +31,7 @@ describe('Security', () => {
   describe(`generateAuthToken`, () => {
     it('should generate an auth token from json payload', () => {
       const payload = {
-        keyName: 'key',
+        publicKey: 'key',
         timestamp: 'now'
       };
 
@@ -49,7 +49,7 @@ describe('Security', () => {
   describe(`validateAuthToken`, () => {
     it('should validate auth token', () => {
       const payload = {
-        keyName: 'key',
+        publicKey: 'key',
         timestamp: 'now'
       };
 
@@ -62,7 +62,7 @@ describe('Security', () => {
 
     it('should throw TokenError if signing key is invalid', () => {
       const payload = {
-        keyName: 'key',
+        publicKey: 'key',
         timestamp: 'now'
       };
 

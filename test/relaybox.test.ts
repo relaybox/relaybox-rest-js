@@ -52,14 +52,14 @@ describe('Ds', () => {
         }
       };
 
-      const [keyName] = mockApiKey.split(':');
+      const [publicKey] = mockApiKey.split(':');
       const { token, expiresIn } = relayBox.generateTokenResponse(params);
 
       expect(expiresIn).toEqual(tokenExpirySecs);
 
       const decodedToken = jwt.decode(token) as ExtendedJwtPayload;
 
-      expect(decodedToken?.keyName).toEqual(keyName);
+      expect(decodedToken?.publicKey).toEqual(publicKey);
       expect(decodedToken?.clientId).toEqual(mockclientId);
       expect(decodedToken?.permissions).toEqual(params.permissions);
 

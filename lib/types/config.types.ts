@@ -3,6 +3,6 @@ export interface RelayBoxOptions {
 }
 
 export interface ApiKeyParts {
-  keyName: string;
+  publicKey: string;
   secretKey: string;
 }

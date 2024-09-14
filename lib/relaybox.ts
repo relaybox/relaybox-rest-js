@@ -6,7 +6,8 @@ import { PublishResponseData, TokenResponse, TokenResponseParams } from './types
 import { ApiKeyParts, RelayBoxOptions } from './types/config.types';
 import { validatePermissions, validateParams } from './validation';
 
-const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
+// const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
+const DS_EVENTS_SERVICE_URL = `http://localhost:4004/dev`;
 const DEFAULT_TOKEN_EXPIRY_SECS = 900;
 const DEFAULT_TOKEN_TYPE = 'id_token';
 
@@ -41,11 +42,11 @@ export class RelayBox {
   }: TokenResponseParams): TokenResponse {
     validatePermissions(permissions);
 
-    const { keyName, secretKey } = this.apiKeyParts;
+    const { publicKey, secretKey } = this.apiKeyParts;
     const timestamp = new Date().toISOString();
 
     const payload: ExtendedJwtPayload = {
-      keyName,
+      publicKey,
       timestamp,
       tokenType: DEFAULT_TOKEN_TYPE,
       ...(permissions && { permissions }),
@@ -115,7 +116,7 @@ export class RelayBox {
       timestamp
     });
 
-    const { keyName: publicKey, secretKey } = this.apiKeyParts;
+    const { publicKey: publicKey, secretKey } = this.apiKeyParts;
 
     const signature = generateHmacSignature(body, secretKey);
 
@@ -137,7 +138,7 @@ export class RelayBox {
     }
 
     return {
-      keyName: parts[0],
+      publicKey: parts[0],
       secretKey: parts[1]
     };
   }
