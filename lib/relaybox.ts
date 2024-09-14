@@ -1,12 +1,13 @@
-import { generateAuthToken, generateHmacSignature } from './signature';
+import { generateAuthToken, generateHmacSignature, validateAuthToken } from './signature';
 import { request } from './request';
 import { ValidationError } from './errors';
 import { ExtendedJwtPayload } from './types/jwt.types';
 import { PublishResponseData, TokenResponse, TokenResponseParams } from './types/response.types';
-import { RelayBoxOptions } from './types/config.types';
+import { ApiKeyParts, RelayBoxOptions } from './types/config.types';
 import { validatePermissions, validateParams } from './validation';
 
-const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
+// const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
+const DS_EVENTS_SERVICE_URL = `http://localhost:4004/dev`;
 const DEFAULT_TOKEN_EXPIRY_SECS = 900;
 const DEFAULT_TOKEN_TYPE = 'id_token';
 
@@ -15,7 +16,7 @@ const DEFAULT_TOKEN_TYPE = 'id_token';
  * to a specified service using an API key.
  */
 export class RelayBox {
-  private apiKeyParts: [string, string];
+  private apiKeyParts: ApiKeyParts;
   private dsEventsServiceUrl: string = DS_EVENTS_SERVICE_URL;
 
   /**
@@ -41,7 +42,7 @@ export class RelayBox {
   }: TokenResponseParams): TokenResponse {
     validatePermissions(permissions);
 
-    const [keyName, secretKey] = this.apiKeyParts;
+    const { keyName, secretKey } = this.apiKeyParts;
     const timestamp = new Date().toISOString();
 
     const payload: ExtendedJwtPayload = {
@@ -115,7 +116,8 @@ export class RelayBox {
       timestamp
     });
 
-    const [publicKey, secretKey] = this.apiKeyParts;
+    const { keyName: publicKey, secretKey } = this.apiKeyParts;
+
     const signature = generateHmacSignature(body, secretKey);
 
     return [body, signature, publicKey];
@@ -128,13 +130,28 @@ export class RelayBox {
    * @returns {[string, string]} The public key and secret key as a tuple.
    * @throws {ValidationError} If the API key is not in the correct format.
    */
-  private getApiKeyParts(apiKey: string): [string, string] {
+  private getApiKeyParts(apiKey: string): ApiKeyParts {
     const parts = apiKey.split(':');
 
     if (parts.length !== 2) {
       throw new ValidationError('API key must be in the format "appId.keyId:secretKey"');
     }
 
-    return parts as [string, string];
+    return {
+      keyName: parts[0],
+      secretKey: parts[1]
+    };
+  }
+
+  /**
+   * Validates the provided auth token against the API key secret key.
+   * @param {string} token - The auth token to be validated.
+   * @returns {ExtendedJwtPayload} The decoded JWT payload.
+   * @throws {TokenError} If the token is invalid.
+   */
+  public validateAuthToken(token: string): ExtendedJwtPayload {
+    const { secretKey } = this.apiKeyParts;
+
+    return validateAuthToken(token, secretKey);
   }
 }

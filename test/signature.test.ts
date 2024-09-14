@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { ValidationError } from '../lib/errors';
-import { generateHmacSignature, generateAuthToken } from '../lib/signature';
+import { ValidationError, TokenError } from '../lib/errors';
+import { generateHmacSignature, generateAuthToken, validateAuthToken } from '../lib/signature';
 
 const mockSigningKey = '12345';
 
@@ -43,6 +43,46 @@ describe('Security', () => {
     it('should throw ValidationError if required parameters are falsey', () => {
       // @ts-ignore
       expect(() => generateAuthToken(null, mockSigningKey, 300)).toThrow(ValidationError);
+    });
+  });
+
+  describe(`validateAuthToken`, () => {
+    it('should validate auth token', () => {
+      const payload = {
+        keyName: 'key',
+        timestamp: 'now'
+      };
+
+      const generatedAuthToken = generateAuthToken(payload, mockSigningKey, 300);
+
+      expect(validateAuthToken(generatedAuthToken, mockSigningKey)).toEqual(
+        expect.objectContaining(payload)
+      );
+    });
+
+    it('should throw TokenError if signing key is invalid', () => {
+      const payload = {
+        keyName: 'key',
+        timestamp: 'now'
+      };
+
+      const invalidSigningKey = 'abcde';
+
+      const generatedAuthToken = generateAuthToken(payload, mockSigningKey, 300);
+
+      expect(() => validateAuthToken(generatedAuthToken, invalidSigningKey)).toThrow(TokenError);
+    });
+
+    it('should throw TokenError if string to sign are falsey', () => {
+      // @ts-ignore
+      expect(() => validateAuthToken(null, mockSigningKey)).toThrow(TokenError);
+    });
+
+    it('should throw TokenError if signing key is falsey', () => {
+      // @ts-ignore
+      expect(() => validateAuthToken('test', null)).toThrow(TokenError);
+      // @ts-ignore
+      expect(() => validateAuthToken('test', undefined)).toThrow(TokenError);
     });
   });
 });

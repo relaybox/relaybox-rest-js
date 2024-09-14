@@ -46,3 +46,11 @@ export function generateAuthToken(
     throw new TokenError(`Failed to generate token, ${err.message}`);
   }
 }
+
+export function validateAuthToken(token: string, secretKey: string): ExtendedJwtPayload {
+  try {
+    return jwt.verify(token, secretKey) as ExtendedJwtPayload;
+  } catch (err: any) {
+    throw new TokenError(`Failed to validate token, ${err.message}`);
+  }
+}
