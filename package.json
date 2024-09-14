@@ -1,6 +1,6 @@
 {
   "name": "@relaybox/rest",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "RelayBox REST Services SDK. Enables seemless integration between server-side applications and RelayBox's authentication and realtime services. It provides robust functionality for generating authentication tokens, publishing events, and interacting efficiently with RelayBox's suite of services.",
   "keywords": [
     "realtime infrastructure",
