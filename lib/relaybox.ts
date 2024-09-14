@@ -6,8 +6,7 @@ import { PublishResponseData, TokenResponse, TokenResponseParams } from './types
 import { ApiKeyParts, RelayBoxOptions } from './types/config.types';
 import { validatePermissions, validateParams } from './validation';
 
-// const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
-const DS_EVENTS_SERVICE_URL = `http://localhost:4004/dev`;
+const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
 const DEFAULT_TOKEN_EXPIRY_SECS = 900;
 const DEFAULT_TOKEN_TYPE = 'id_token';
 
