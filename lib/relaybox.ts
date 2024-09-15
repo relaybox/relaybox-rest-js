@@ -1,4 +1,4 @@
-import { generateAuthToken, generateHmacSignature, validateAuthToken } from './signature';
+import { generateAuthToken, generateHmacSignature, verifyAuthToken } from './signature';
 import { request } from './request';
 import { ValidationError } from './errors';
 import { ExtendedJwtPayload } from './types/jwt.types';
@@ -148,9 +148,9 @@ export class RelayBox {
    * @returns {ExtendedJwtPayload} The decoded JWT payload.
    * @throws {TokenError} If the token is invalid.
    */
-  public validateAuthToken(token: string): ExtendedJwtPayload {
+  public verifyAuthToken(token: string): ExtendedJwtPayload {
     const { secretKey } = this.apiKeyParts;
 
-    return validateAuthToken(token, secretKey);
+    return verifyAuthToken(token, secretKey);
   }
 }

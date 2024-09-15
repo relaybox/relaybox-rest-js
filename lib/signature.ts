@@ -47,7 +47,7 @@ export function generateAuthToken(
   }
 }
 
-export function validateAuthToken(token: string, secretKey: string): ExtendedJwtPayload {
+export function verifyAuthToken(token: string, secretKey: string): ExtendedJwtPayload {
   try {
     return jwt.verify(token, secretKey) as ExtendedJwtPayload;
   } catch (err: any) {

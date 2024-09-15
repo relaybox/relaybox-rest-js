@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { ValidationError, TokenError } from '../lib/errors';
-import { generateHmacSignature, generateAuthToken, validateAuthToken } from '../lib/signature';
+import { generateHmacSignature, generateAuthToken, verifyAuthToken } from '../lib/signature';
 
 const mockSigningKey = '12345';
 
@@ -46,7 +46,7 @@ describe('Security', () => {
     });
   });
 
-  describe(`validateAuthToken`, () => {
+  describe(`verifyAuthToken`, () => {
     it('should validate auth token', () => {
       const payload = {
         publicKey: 'key',
@@ -55,7 +55,7 @@ describe('Security', () => {
 
       const generatedAuthToken = generateAuthToken(payload, mockSigningKey, 300);
 
-      expect(validateAuthToken(generatedAuthToken, mockSigningKey)).toEqual(
+      expect(verifyAuthToken(generatedAuthToken, mockSigningKey)).toEqual(
         expect.objectContaining(payload)
       );
     });
@@ -70,19 +70,19 @@ describe('Security', () => {
 
       const generatedAuthToken = generateAuthToken(payload, mockSigningKey, 300);
 
-      expect(() => validateAuthToken(generatedAuthToken, invalidSigningKey)).toThrow(TokenError);
+      expect(() => verifyAuthToken(generatedAuthToken, invalidSigningKey)).toThrow(TokenError);
     });
 
     it('should throw TokenError if string to sign are falsey', () => {
       // @ts-ignore
-      expect(() => validateAuthToken(null, mockSigningKey)).toThrow(TokenError);
+      expect(() => verifyAuthToken(null, mockSigningKey)).toThrow(TokenError);
     });
 
     it('should throw TokenError if signing key is falsey', () => {
       // @ts-ignore
-      expect(() => validateAuthToken('test', null)).toThrow(TokenError);
+      expect(() => verifyAuthToken('test', null)).toThrow(TokenError);
       // @ts-ignore
-      expect(() => validateAuthToken('test', undefined)).toThrow(TokenError);
+      expect(() => verifyAuthToken('test', undefined)).toThrow(TokenError);
     });
   });
 });
