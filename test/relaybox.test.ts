@@ -8,7 +8,7 @@ import { generateHmacSignature } from '../lib/signature';
 import { HTTPRequestError } from '../lib/errors';
 
 const server = setupServer();
-const mockEventsEndpoint = `https://events.prod.relaybox-services.net`;
+const mockUwsServiceUrl = `http://localhost:9090/uws`;
 const mockSecretKey = `abcde`;
 const mockApiKey = `appPid.keyId:${mockSecretKey}`;
 const mockclientId = `12345`;
@@ -34,7 +34,10 @@ describe('Ds', () => {
   });
 
   beforeEach(() => {
-    relayBox = new RelayBox({ apiKey: mockApiKey });
+    relayBox = new RelayBox({
+      apiKey: mockApiKey,
+      uwsServiceUrl: mockUwsServiceUrl
+    });
   });
 
   afterEach(() => {
@@ -126,7 +129,7 @@ describe('Ds', () => {
         );
 
         server.use(
-          http.post(mockEventsEndpoint, ({ request }) => {
+          http.post(`${mockUwsServiceUrl}/events`, ({ request }) => {
             const publicKey = request.headers.get('x-ds-public-key');
             const signature = request.headers.get('x-ds-req-signature');
 
@@ -162,7 +165,7 @@ describe('Ds', () => {
         vi.advanceTimersByTime(1);
 
         server.use(
-          http.post(mockEventsEndpoint, ({ request }) => {
+          http.post(`${mockUwsServiceUrl}/events`, ({ request }) => {
             const signature = request.headers.get('x-ds-req-signature');
 
             if (signature !== mockSignature) {

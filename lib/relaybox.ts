@@ -6,7 +6,7 @@ import { PublishResponseData, TokenResponse, TokenResponseParams } from './types
 import { ApiKeyParts, RelayBoxOptions } from './types/config.types';
 import { validatePermissions, validateParams } from './validation';
 
-const DS_EVENTS_SERVICE_URL = `https://events.prod.relaybox-services.net`;
+const DEFAULT_UWS_SERVICE_URL = `https://gnet.prod.relaybox-services.net`;
 const DEFAULT_TOKEN_EXPIRY_SECS = 900;
 const DEFAULT_TOKEN_TYPE = 'id_token';
 
@@ -16,16 +16,17 @@ const DEFAULT_TOKEN_TYPE = 'id_token';
  */
 export class RelayBox {
   private apiKeyParts: ApiKeyParts;
-  private dsEventsServiceUrl: string = DS_EVENTS_SERVICE_URL;
+  private uwsServiceUrl: string;
 
   /**
    * Creates an instance of RelayBox.
    * @param {RelayBoxOptions} options - The options for configuring the RelayBox instance.
    * @throws {ValidationError} If the API key is not provided or is invalid.
    */
-  constructor({ apiKey }: RelayBoxOptions) {
+  constructor({ apiKey, uwsServiceUrl }: RelayBoxOptions) {
     validateParams({ apiKey }, ['apiKey']);
     this.apiKeyParts = this.getApiKeyParts(apiKey);
+    this.uwsServiceUrl = uwsServiceUrl || DEFAULT_UWS_SERVICE_URL;
   }
 
   /**
@@ -88,7 +89,10 @@ export class RelayBox {
       body: requestBody
     };
 
-    const response = await request<PublishResponseData>(this.dsEventsServiceUrl, requestParams);
+    const response = await request<PublishResponseData>(
+      `${this.uwsServiceUrl}/events`,
+      requestParams
+    );
 
     return response.data;
   }
