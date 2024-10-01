@@ -4,25 +4,25 @@
 
 Find the full technical [documention here](https://relaybox.net/docs/api-reference/relaybox-rest)
 
-Welcome to RelayBox.
+Welcome to RelayBox, we're exited you're here!
 
-In order to use this library, you need to create a free account and [API key](https://relaybox.net/docs/authentication/api-keys). Find more details [here](https://relaybox.net/docs/getting-started).
+First up, in order to use this library, you'll need to create a free account and [API key](https://relaybox.net/docs/authentication/api-keys). Find more details [here](https://relaybox.net/docs/getting-started).
 
 If you find any issues, please report them [here](https://github.com/relaybox/relaybox-rest-js/issues) or contact support@relaybox.net.
 
 ## Installation
 
-To install the REST services library, ensure that npm is installed on the host machine, then run the following command:
+To install the REST services library, ensure you have npm running on your machine, then run the following command:
 
 ```
 npm install @relaybox/rest
 ```
 
-Once you have successfully installed the library, the following API reference applies.
+Once you've successfully installed the library, see below for the API reference in more detail or find the full documenation [here](https://relaybox.net/docs/api-reference/relaybox-rest).
 
 ## RelayBox Constructor
 
-Instantiate a new RelayBox object to enable usage of the server-side SDK.
+To begin interactaction with the REST services, instantiate a new RelayBox object.
 
 ```typescript
 const relayBox = new RelayBox();
@@ -36,7 +36,7 @@ class RelayBox {
 
 ## RelayBoxOptions
 
-RelayBox class constructor options:
+The various configuration options you'll find throughout the library.
 
 ```typescript
 interface RelayBoxOptions {
@@ -78,9 +78,8 @@ interface Permissions {
         (required)
       </td>
       <td>
-        Associate an API key with the connection, which you can generate via the
-        <Link href="/dashboard">dashboard</Link>. To create an API key, first
-        <Link href="/auth/login?authStage=register">register for a free account</Link>.
+        An API key plays an important role in identitfying your app when publising events or conneciing to the realtime services. Head over to the
+        <Link href="/dashboard">dashboard</Link> to <Link href="/auth/login?authStage=register">register for a free account</Link> and create an API key if you havn't already. 
       </td>
       <td>string</td>
     </tr>

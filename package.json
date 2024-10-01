@@ -40,6 +40,9 @@
   "bugs": {
     "url": "https://github.com/relaybox/relaybox-rest-js/issues"
   },
+  "files": [
+    "dist/**/*"
+  ],
   "homepage": "https://relaybox.net",
   "dependencies": {
     "jsonwebtoken": "^9.0.2"
