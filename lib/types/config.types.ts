@@ -1,6 +1,6 @@
 export interface RelayBoxOptions {
   apiKey: string;
-  uwsServiceUrl?: string;
+  coreServiceUrl?: string;
 }
 
 export interface ApiKeyParts {
