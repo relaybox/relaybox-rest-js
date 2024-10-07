@@ -5,13 +5,14 @@ import { RelayBox } from '../lib/relaybox';
 import jwt from 'jsonwebtoken';
 import { ExtendedJwtPayload } from '../lib/types/jwt.types';
 import { generateHmacSignature } from '../lib/signature';
-import { HTTPRequestError } from '../lib/errors';
+import { HTTPRequestError, TimeoutError } from '../lib/errors';
 
 const server = setupServer();
 const mockCoreServiceUrl = `http://localhost:9000/core`;
 const mockSecretKey = `abcde`;
 const mockApiKey = `appPid.keyId:${mockSecretKey}`;
 const mockclientId = `12345`;
+const mockDate = new Date('2023-01-01T00:00:00Z');
 
 function isJwtExpired(token: string, secret: string) {
   try {
@@ -63,7 +64,7 @@ describe('RelayBox', () => {
     });
 
     it('should set custom expiry on generated auth token', async () => {
-      vi.useFakeTimers();
+      vi.useFakeTimers({ now: mockDate.getTime() });
 
       const expiresIn = 300;
       const params = {
@@ -80,7 +81,7 @@ describe('RelayBox', () => {
     });
 
     it('should set default expiry on generated auth token', async () => {
-      vi.useFakeTimers();
+      vi.useFakeTimers({ now: mockDate.getTime() });
 
       const defaultExpirySecs = 900;
       const params = {};
@@ -114,9 +115,9 @@ describe('RelayBox', () => {
       server.close();
     });
 
-    describe('success, 2xx', () => {
+    describe('success', () => {
       it('should sucessfully publish an event', async () => {
-        vi.useFakeTimers();
+        vi.useFakeTimers({ now: mockDate.getTime() });
 
         const mockSignature = generateHmacSignature(
           JSON.stringify({
@@ -150,9 +151,9 @@ describe('RelayBox', () => {
       });
     });
 
-    describe('error, 4xx / 5xx', () => {
-      it('should throw an error if response in non 2xx', async () => {
-        vi.useFakeTimers();
+    describe('error', () => {
+      it('should throw HTTPRequestError if response in non 2xx', async () => {
+        vi.useFakeTimers({ now: mockDate.getTime() });
 
         const mockSignature = generateHmacSignature(
           JSON.stringify({

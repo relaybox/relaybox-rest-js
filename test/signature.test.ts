@@ -17,7 +17,7 @@ describe('Security', () => {
       expect(generatedSignature).toBeDefined();
     });
 
-    it('should throw ValidationError if string to sign are falsey', () => {
+    it('should throw ValidationError if string to sign is falsey', () => {
       // @ts-ignore
       expect(() => generateHmacSignature(null, mockSigningKey)).toThrow(ValidationError);
     });
@@ -73,7 +73,7 @@ describe('Security', () => {
       expect(() => verifyAuthToken(generatedAuthToken, invalidSigningKey)).toThrow(TokenError);
     });
 
-    it('should throw TokenError if string to sign are falsey', () => {
+    it('should throw TokenError if string to sign is falsey', () => {
       // @ts-ignore
       expect(() => verifyAuthToken(null, mockSigningKey)).toThrow(TokenError);
     });
