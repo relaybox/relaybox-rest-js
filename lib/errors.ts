@@ -3,7 +3,8 @@ enum ErrorName {
   NETWORK_ERROR = 'NetworkError',
   HTTP_REQUEST_ERROR = 'HTTPRequestError',
   SIGNATURE_ERROR = 'SignatureError',
-  TOKEN_ERROR = 'TokenError'
+  TOKEN_ERROR = 'TokenError',
+  TIMEOUT_ERROR = 'TimeoutError'
 }
 
 export class ValidationError extends Error {
@@ -44,5 +45,12 @@ export class TokenError extends Error {
   constructor(message: string, public details?: any) {
     super(message);
     this.name = ErrorName.TOKEN_ERROR;
+  }
+}
+
+export class TimeoutError extends Error {
+  constructor(message: string, public details?: any) {
+    super(message);
+    this.name = ErrorName.TIMEOUT_ERROR;
   }
 }

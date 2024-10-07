@@ -8,7 +8,7 @@ import { generateHmacSignature } from '../lib/signature';
 import { HTTPRequestError } from '../lib/errors';
 
 const server = setupServer();
-const mockCoreServiceUrl = `http://localhost:9090/core`;
+const mockCoreServiceUrl = `http://localhost:9000/core`;
 const mockSecretKey = `abcde`;
 const mockApiKey = `appPid.keyId:${mockSecretKey}`;
 const mockclientId = `12345`;
@@ -22,16 +22,8 @@ function isJwtExpired(token: string, secret: string) {
   }
 }
 
-describe('Ds', () => {
+describe('RelayBox', () => {
   let relayBox: RelayBox;
-
-  beforeAll(() => {
-    vi.useFakeTimers();
-  });
-
-  afterAll(() => {
-    vi.useRealTimers();
-  });
 
   beforeEach(() => {
     relayBox = new RelayBox({
@@ -41,7 +33,8 @@ describe('Ds', () => {
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    vi.resetAllMocks();
+    vi.useRealTimers();
   });
 
   describe('generateTokenResponse', () => {
@@ -70,6 +63,8 @@ describe('Ds', () => {
     });
 
     it('should set custom expiry on generated auth token', async () => {
+      vi.useFakeTimers();
+
       const expiresIn = 300;
       const params = {
         expiresIn
@@ -85,6 +80,8 @@ describe('Ds', () => {
     });
 
     it('should set default expiry on generated auth token', async () => {
+      vi.useFakeTimers();
+
       const defaultExpirySecs = 900;
       const params = {};
 
@@ -109,6 +106,7 @@ describe('Ds', () => {
     });
 
     afterEach(() => {
+      vi.useRealTimers();
       server.resetHandlers();
     });
 
@@ -118,6 +116,8 @@ describe('Ds', () => {
 
     describe('success, 2xx', () => {
       it('should sucessfully publish an event', async () => {
+        vi.useFakeTimers();
+
         const mockSignature = generateHmacSignature(
           JSON.stringify({
             event: mockEvent,
@@ -152,6 +152,8 @@ describe('Ds', () => {
 
     describe('error, 4xx / 5xx', () => {
       it('should throw an error if response in non 2xx', async () => {
+        vi.useFakeTimers();
+
         const mockSignature = generateHmacSignature(
           JSON.stringify({
             event: mockEvent,
