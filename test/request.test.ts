@@ -55,9 +55,7 @@ describe('request', () => {
 
       const requestPromise = request(mockCoreServiceUrl, { method: 'POST' });
 
-      console.log(1, Date.now());
       vi.advanceTimersByTime(20000);
-      console.log(2, Date.now());
 
       await expect(requestPromise).rejects.toThrow(TimeoutError);
     });
