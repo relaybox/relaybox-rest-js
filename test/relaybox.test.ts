@@ -8,10 +8,11 @@ import { generateHmacSignature } from '../lib/signature';
 import { HTTPRequestError } from '../lib/errors';
 
 const server = setupServer();
-const mockCoreServiceUrl = `http://localhost:9090/core`;
+const mockCoreServiceUrl = `http://localhost:9000/core`;
 const mockSecretKey = `abcde`;
 const mockApiKey = `appPid.keyId:${mockSecretKey}`;
 const mockclientId = `12345`;
+const mockDate = new Date('2023-01-01T00:00:00Z');
 
 function isJwtExpired(token: string, secret: string) {
   try {
@@ -22,16 +23,8 @@ function isJwtExpired(token: string, secret: string) {
   }
 }
 
-describe('Ds', () => {
+describe('RelayBox', () => {
   let relayBox: RelayBox;
-
-  beforeAll(() => {
-    vi.useFakeTimers();
-  });
-
-  afterAll(() => {
-    vi.useRealTimers();
-  });
 
   beforeEach(() => {
     relayBox = new RelayBox({
@@ -41,7 +34,8 @@ describe('Ds', () => {
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    vi.resetAllMocks();
+    vi.useRealTimers();
   });
 
   describe('generateTokenResponse', () => {
@@ -70,6 +64,8 @@ describe('Ds', () => {
     });
 
     it('should set custom expiry on generated auth token', async () => {
+      vi.useFakeTimers({ now: mockDate.getTime() });
+
       const expiresIn = 300;
       const params = {
         expiresIn
@@ -85,6 +81,8 @@ describe('Ds', () => {
     });
 
     it('should set default expiry on generated auth token', async () => {
+      vi.useFakeTimers({ now: mockDate.getTime() });
+
       const defaultExpirySecs = 900;
       const params = {};
 
@@ -109,6 +107,7 @@ describe('Ds', () => {
     });
 
     afterEach(() => {
+      vi.useRealTimers();
       server.resetHandlers();
     });
 
@@ -116,8 +115,10 @@ describe('Ds', () => {
       server.close();
     });
 
-    describe('success, 2xx', () => {
+    describe('success', () => {
       it('should sucessfully publish an event', async () => {
+        vi.useFakeTimers({ now: mockDate.getTime() });
+
         const mockSignature = generateHmacSignature(
           JSON.stringify({
             event: mockEvent,
@@ -150,8 +151,10 @@ describe('Ds', () => {
       });
     });
 
-    describe('error, 4xx / 5xx', () => {
-      it('should throw an error if response in non 2xx', async () => {
+    describe('error', () => {
+      it('should throw HTTPRequestError if response in non 2xx', async () => {
+        vi.useFakeTimers({ now: mockDate.getTime() });
+
         const mockSignature = generateHmacSignature(
           JSON.stringify({
             event: mockEvent,
