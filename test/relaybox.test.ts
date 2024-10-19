@@ -1,7 +1,7 @@
 import { vi, describe, it, expect, afterEach, beforeAll, afterAll, beforeEach } from 'vitest';
 import { setupServer } from 'msw/node';
 import { HttpResponse, http } from 'msw';
-import { RelayBox } from '../lib/relaybox';
+import RelayBox from '../lib/relaybox';
 import jwt from 'jsonwebtoken';
 import { ExtendedJwtPayload } from '../lib/types/jwt.types';
 import { generateHmacSignature } from '../lib/signature';
