@@ -14,7 +14,7 @@ const DEFAULT_TOKEN_TYPE = 'id_token';
  * The RelayBox class provides methods to generate authentication tokens and publish events
  * to a specified service using an API key.
  */
-export class RelayBox {
+export default class RelayBox {
   private apiKeyParts: ApiKeyParts;
   private coreServiceUrl: string;
 
