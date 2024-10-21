@@ -10,6 +10,7 @@ import { ExtendedJwtPayload } from './types/jwt.types';
 import { PublishResponseData, TokenResponse, TokenResponseParams } from './types/response.types';
 import { ApiKeyParts, RelayBoxOptions } from './types/config.types';
 import { validatePermissions, validateParams } from './validation';
+import { WebhookPayload } from './types/webhook.types';
 
 const DEFAULT_CORE_SERVICE_URL = `https://gnet.prod.relaybox-services.net`;
 const DEFAULT_TOKEN_EXPIRY_SECS = 900;
@@ -166,7 +167,13 @@ export default class RelayBox {
   /**
    * Verify webhook sugnature
    */
-  public verifyWebhookSignature(data: any, requestSignature: string, signingKey: string): boolean {
+  public verifyWebhookSignature(
+    webhookPayload: WebhookPayload,
+    requestSignature: string,
+    signingKey: string
+  ): boolean {
+    const { data } = webhookPayload;
+
     const serializedData = serializeData(data);
     const generatedSignature = generateHmacSignature(serializedData, signingKey);
 
