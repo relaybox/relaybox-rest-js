@@ -1,6 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { ValidationError, TokenError } from '../lib/errors';
-import { generateHmacSignature, generateAuthToken, verifyAuthToken } from '../lib/signature';
+import {
+  generateHmacSignature,
+  generateAuthToken,
+  verifyAuthToken,
+  serializeData
+} from '../lib/signature';
 
 const mockSigningKey = '12345';
 
@@ -83,6 +88,28 @@ describe('Security', () => {
       expect(() => verifyAuthToken('test', null)).toThrow(TokenError);
       // @ts-ignore
       expect(() => verifyAuthToken('test', undefined)).toThrow(TokenError);
+    });
+  });
+
+  describe('serializeData', () => {
+    it('should cononically serialize json data', () => {
+      const data = {
+        z: 98,
+        a: 123,
+        c: 5
+      };
+
+      const serializedData = serializeData(data);
+
+      expect(serializedData).toEqual('"{\\"a\\":123,\\"c\\":5,\\"z\\":98}"');
+    });
+
+    it('should cononically serialize string data', () => {
+      const data = 'random string';
+
+      const serializedData = serializeData(data);
+
+      expect(serializedData).toEqual('"\\"random string\\""');
     });
   });
 });

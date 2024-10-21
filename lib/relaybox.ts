@@ -1,4 +1,9 @@
-import { generateAuthToken, generateHmacSignature, verifyAuthToken } from './signature';
+import {
+  generateAuthToken,
+  generateHmacSignature,
+  serializeData,
+  verifyAuthToken
+} from './signature';
 import { request } from './request';
 import { ValidationError } from './errors';
 import { ExtendedJwtPayload } from './types/jwt.types';
@@ -156,5 +161,15 @@ export default class RelayBox {
     const { secretKey } = this.apiKeyParts;
 
     return verifyAuthToken(token, secretKey);
+  }
+
+  /**
+   * Verify webhook sugnature
+   */
+  public verifyWebhookSignature(data: any, requestSignature: string, signingKey: string): boolean {
+    const serializedData = serializeData(data);
+    const generatedSignature = generateHmacSignature(serializedData, signingKey);
+
+    return generatedSignature === requestSignature;
   }
 }

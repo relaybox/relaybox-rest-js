@@ -45,6 +45,7 @@
   ],
   "homepage": "https://relaybox.net",
   "dependencies": {
+    "json-canonicalize": "^1.0.6",
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
