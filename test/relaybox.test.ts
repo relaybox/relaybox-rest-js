@@ -6,6 +6,8 @@ import jwt from 'jsonwebtoken';
 import { ExtendedJwtPayload } from '../lib/types/jwt.types';
 import { generateHmacSignature } from '../lib/signature';
 import { HTTPRequestError } from '../lib/errors';
+import { WebhookPayload } from '../lib/types/webhook.types';
+import { Session } from '../lib/types/auth.types';
 
 const server = setupServer();
 const mockCoreServiceUrl = `http://localhost:9000/core`;

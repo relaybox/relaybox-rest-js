@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { ExtendedJwtPayload } from './types/jwt.types';
 import { SignatureError, TokenError, ValidationError } from './errors';
+import { canonicalize } from 'json-canonicalize';
 
 const JWT_ISSUER = `https://relaybox.net`;
 const JWT_HASHING_ALGORITHM = 'HS256';
@@ -52,5 +53,15 @@ export function verifyAuthToken(token: string, secretKey: string): ExtendedJwtPa
     return jwt.verify(token, secretKey) as ExtendedJwtPayload;
   } catch (err: any) {
     throw new TokenError(`Failed to validate token, ${err.message}`);
+  }
+}
+
+export function serializeData(data: any): string {
+  try {
+    const canonicalizedData = canonicalize(data);
+    const serializedData = JSON.stringify(canonicalizedData);
+    return serializedData;
+  } catch (err: unknown) {
+    throw new SignatureError(`failed to serialze data, ${err}`);
   }
 }

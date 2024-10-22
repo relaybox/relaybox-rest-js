@@ -1,10 +1,16 @@
-import { generateAuthToken, generateHmacSignature, verifyAuthToken } from './signature';
+import {
+  generateAuthToken,
+  generateHmacSignature,
+  serializeData,
+  verifyAuthToken
+} from './signature';
 import { request } from './request';
 import { ValidationError } from './errors';
 import { ExtendedJwtPayload } from './types/jwt.types';
 import { PublishResponseData, TokenResponse, TokenResponseParams } from './types/response.types';
 import { ApiKeyParts, RelayBoxOptions } from './types/config.types';
 import { validatePermissions, validateParams } from './validation';
+import { WebhookPayload } from './types/webhook.types';
 
 const DEFAULT_CORE_SERVICE_URL = `https://gnet.prod.relaybox-services.net`;
 const DEFAULT_TOKEN_EXPIRY_SECS = 900;
@@ -156,5 +162,21 @@ export default class RelayBox {
     const { secretKey } = this.apiKeyParts;
 
     return verifyAuthToken(token, secretKey);
+  }
+
+  /**
+   * Verify webhook sugnature
+   */
+  public verifyWebhookSignature(
+    webhookPayload: WebhookPayload,
+    requestSignature: string,
+    signingKey: string
+  ): boolean {
+    const { data } = webhookPayload;
+
+    const serializedData = serializeData(data);
+    const generatedSignature = generateHmacSignature(serializedData, signingKey);
+
+    return generatedSignature === requestSignature;
   }
 }
