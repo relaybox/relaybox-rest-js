@@ -172,9 +172,7 @@ export default class RelayBox {
     requestSignature: string,
     signingKey: string
   ): boolean {
-    const { data } = webhookPayload;
-
-    const serializedData = serializeData(data);
+    const serializedData = serializeData(webhookPayload);
     const generatedSignature = generateHmacSignature(serializedData, signingKey);
 
     return generatedSignature === requestSignature;
