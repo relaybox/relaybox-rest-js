@@ -77,14 +77,19 @@ export default class RelayBox {
    * @returns {Promise<PublishResponseData>} The response data from the publish request.
    * @throws {ValidationError} If required parameters are missing.
    */
-  async publish(roomId: string | string[], event: string, data: any): Promise<PublishResponseData> {
+  async publish(
+    roomId: string | string[],
+    event: string,
+    data: any,
+    clientId?: string
+  ): Promise<PublishResponseData> {
     validateParams({ roomId, event, data }, ['roomId', 'event', 'data']);
 
-    const [requestBody, requestSignature, publicKey] = this.prepareRequestParams(
-      roomId,
-      event,
-      data
-    );
+    const {
+      body: requestBody,
+      signature: requestSignature,
+      publicKey
+    } = this.prepareRequestParams(roomId, event, data, clientId);
 
     const requestParams = {
       method: 'POST',
@@ -114,22 +119,24 @@ export default class RelayBox {
   private prepareRequestParams(
     roomId: string | string[],
     event: string,
-    data: any
-  ): [string, string, string] {
+    data: any,
+    clientId?: string
+  ): { body: string; signature: string; publicKey: string } {
     const timestamp = Date.now();
 
     const body = JSON.stringify({
       event,
       roomId,
       data,
-      timestamp
+      timestamp,
+      clientId
     });
 
     const { publicKey: publicKey, secretKey } = this.apiKeyParts;
 
     const signature = generateHmacSignature(body, secretKey);
 
-    return [body, signature, publicKey];
+    return { body, signature, publicKey };
   }
 
   /**
