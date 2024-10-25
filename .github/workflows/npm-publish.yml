@@ -67,6 +67,6 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'chore: update package version [skip ci]'
+          commit_message: 'chore: update package version ${{ steps.extract-version.outputs.version }} [skip ci]'
           commit_author: GitHub Actions <actions@github.com>
           branch: main
