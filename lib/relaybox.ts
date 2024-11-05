@@ -172,7 +172,11 @@ export default class RelayBox {
   }
 
   /**
-   * Verify webhook sugnature
+   * Verify the authenticity of a webhook request using the webhook signing key.
+   * @param {WebhookPayload} webhookPayload - The body of the webhook request.
+   * @param {string} requestSignature - The signature of the webhook request found at the `X-Relaybox-Webhook-Signature` header.
+   * @param {string} signingKey - The webhook signing key generated in the Relaybox dashboard.
+   * @returns {boolean} Whether the request is authentic.
    */
   public verifyWebhookSignature(
     webhookPayload: WebhookPayload,
