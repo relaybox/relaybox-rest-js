@@ -4,6 +4,7 @@ export const allowedPermissions = [
   'presence',
   'metrics',
   'history',
+  'intellect',
   '*'
 ] as const;
 
