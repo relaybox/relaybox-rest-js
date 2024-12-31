@@ -12,9 +12,11 @@ import { ApiKeyParts, RelayBoxOptions } from './types/config.types';
 import { validatePermissions, validateParams } from './validation';
 import { WebhookPayload } from './types/webhook.types';
 import { Rooms } from './rooms';
+import { Auth } from './auth';
 
 const DEFAULT_CORE_SERVICE_URL = `https://gnet.prod.relaybox-services.net`;
 const DEFAULT_STATE_SERVICE_URL = `https://state.prod.relaybox-services.net`;
+const DEFAULT_AUTH_SERVICE_URL = `https://auth.prod.relaybox-services.net`;
 const DEFAULT_TOKEN_EXPIRY_SECS = 900;
 const DEFAULT_TOKEN_TYPE = 'id_token';
 
@@ -26,19 +28,25 @@ export default class RelayBox {
   private apiKeyParts: ApiKeyParts;
   private coreServiceUrl: string;
   private stateServiceUrl: string;
+  private authServiceUrl: string;
   public rooms: Rooms;
+  public auth: Auth;
 
   /**
    * Creates an instance of RelayBox.
    * @param {RelayBoxOptions} options - The options for configuring the RelayBox instance.
    * @throws {ValidationError} If the API key is not provided or is invalid.
    */
-  constructor({ apiKey, coreServiceUrl, stateServiceUrl }: RelayBoxOptions) {
+  constructor({ apiKey, coreServiceUrl, stateServiceUrl, authServiceUrl }: RelayBoxOptions) {
     validateParams({ apiKey }, ['apiKey']);
-    this.apiKeyParts = this.getApiKeyParts(apiKey);
-    this.coreServiceUrl = coreServiceUrl || DEFAULT_CORE_SERVICE_URL;
-    this.stateServiceUrl = stateServiceUrl || DEFAULT_STATE_SERVICE_URL;
 
+    this.apiKeyParts = this.getApiKeyParts(apiKey);
+
+    this.coreServiceUrl = coreServiceUrl ?? DEFAULT_CORE_SERVICE_URL;
+    this.stateServiceUrl = stateServiceUrl ?? DEFAULT_STATE_SERVICE_URL;
+    this.authServiceUrl = authServiceUrl ?? DEFAULT_AUTH_SERVICE_URL;
+
+    this.auth = new Auth(this.apiKeyParts, this.authServiceUrl);
     this.rooms = new Rooms(this.apiKeyParts, this.coreServiceUrl, this.stateServiceUrl);
   }
 

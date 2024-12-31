@@ -27,6 +27,7 @@ export class Rooms {
     expiresIn: number
   ): string {
     const { publicKey, secretKey } = this.apiKeyParts;
+
     const timestamp = new Date().toISOString();
 
     const payload: ExtendedJwtPayload = {
