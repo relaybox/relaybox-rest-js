@@ -58,6 +58,6 @@ export function validatePermissions(permissions: any): permissions is Permission
   return true;
 }
 
-export function isValidPermission(cap: any): cap is Permission {
-  return allowedPermissions.includes(cap as Permission);
+export function isValidPermission(perm: any): perm is Permission {
+  return allowedPermissions.includes(perm as Permission);
 }

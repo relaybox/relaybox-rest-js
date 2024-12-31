@@ -34,6 +34,18 @@ export class HTTPRequestError extends Error {
   }
 }
 
+export class HTTPServiceError extends Error {
+  public status: number;
+  public data?: unknown;
+
+  constructor(status: number, message: string, err: any) {
+    super(message);
+    this.status = status;
+    this.name = err.name;
+    this.data = err.data || null;
+  }
+}
+
 export class SignatureError extends Error {
   constructor(message: string, public details?: any) {
     super(message);

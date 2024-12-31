@@ -1,4 +1,6 @@
 export const allowedPermissions = [
+  'create',
+  'join',
   'subscribe',
   'publish',
   'presence',
