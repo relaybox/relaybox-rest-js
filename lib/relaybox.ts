@@ -165,7 +165,7 @@ export default class RelayBox {
     const parts = apiKey.split(':');
 
     if (parts.length !== 2) {
-      throw new ValidationError('API key must be in the format "appId.keyId:secretKey"');
+      throw new ValidationError('API key must be in the format "appPid.keyId:secretKey"');
     }
 
     return {
