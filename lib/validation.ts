@@ -21,7 +21,7 @@ export function validatePermissions(permissions: any): permissions is Permission
     return true;
   }
 
-  const specialCharacterRegex = /[!@#\$%\^\&\)\(+=._-]/;
+  const specialCharacterRegex = /[!@#\$%\^\&\)\(+=.]/;
 
   if (typeof permissions === 'object' && permissions !== null) {
     for (const key in permissions) {

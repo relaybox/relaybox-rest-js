@@ -1,13 +1,7 @@
 import { defaultHeaders, serviceRequest } from './request';
 import { generateAuthToken } from './signature';
-import { ApiKeyParts, ExtendedJwtPayload, HttpMethod, HttpMode } from './types';
-import {
-  Room,
-  RoomMemberType,
-  RoomOptions,
-  RoomTokenType,
-  RoomVisibility
-} from './types/rooms.types';
+import { ApiKeyParts, ExtendedJwtPayload, HttpMethod } from './types';
+import { Room, RoomOptions, RoomTokenType } from './types/rooms.types';
 
 const STATE_SERVICE_PATHS = {
   rooms: '/rooms'
@@ -55,18 +49,20 @@ export class Rooms {
    * @param {string} authToken - The authorization token.
    * @param {RoomOptions} roomOptions - The options for the room.
    */
-  async create(roomId: string, authToken: string, roomOptions?: RoomOptions): Promise<Room> {
-    const { roomName, visibility, memberType } = roomOptions || {
-      roomName: '',
-      visibility: 'public',
-      memberType: 'member'
-    };
+  async create(roomId: string, authToken: string, roomOptions: RoomOptions = {}): Promise<Room> {
+    const {
+      roomName = null,
+      visibility = 'public',
+      memberType = 'member',
+      password = null
+    } = roomOptions;
 
     const requestBody = {
       roomId,
       roomName,
       memberType,
-      visibility
+      visibility,
+      password
     };
 
     const requestParams: RequestInit = {

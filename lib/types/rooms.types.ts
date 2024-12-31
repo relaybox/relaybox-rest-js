@@ -6,6 +6,7 @@ export interface RoomOptions {
   roomName?: string;
   visibility?: RoomVisibility;
   memberType?: RoomMemberType;
+  password?: string;
 }
 
 export interface Room {
