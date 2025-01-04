@@ -1,7 +1,7 @@
-import { defaultHeaders, serviceRequest } from './request';
-import { generateAuthToken } from './signature';
-import { ApiKeyParts, ExtendedJwtPayload, HttpMethod } from './types';
-import { Room, RoomOptions, RoomTokenType } from './types/rooms.types';
+import { defaultHeaders, serviceRequest } from './request.js';
+import { generateAuthToken } from './signature.js';
+import { ApiKeyParts, ExtendedJwtPayload, HttpMethod } from './types/index.js';
+import { Room, RoomOptions, RoomTokenType } from './types/rooms.types.js';
 
 const STATE_SERVICE_PATHS = {
   rooms: '/rooms'

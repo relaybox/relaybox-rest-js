@@ -1,5 +1,5 @@
-import { HTTPRequestError, HTTPServiceError, NetworkError, TimeoutError } from './errors';
-import { ApiData, FormattedResponse } from './types/request.types';
+import { HTTPRequestError, HTTPServiceError, NetworkError, TimeoutError } from './errors.js';
+import { ApiData, FormattedResponse } from './types/request.types.js';
 
 const NODE_FETCH_ERR_MESSAGES = ['Failed to fetch'];
 const DEFAULT_REQUEST_TIMEOUT_MS = 10000;
@@ -67,7 +67,7 @@ export async function serviceRequest<T>(url: URL | string, params: RequestInit):
   } catch (err: unknown) {
     if (err instanceof TypeError && NODE_FETCH_ERR_MESSAGES.includes(err.message)) {
       throw new NetworkError('Network request failed: Unable to connect to the server', 0);
-    } else if (err instanceof DOMException && err.name === TimeoutError.name) {
+    } else if (err instanceof Error && err.name === TimeoutError.name) {
       throw new TimeoutError(err.message);
     } else {
       throw err;

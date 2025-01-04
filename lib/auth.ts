@@ -1,10 +1,26 @@
-import { serviceRequest } from './request';
-import { verifyAuthToken } from './signature';
-import { ApiKeyParts, ExtendedJwtPayload, HttpMethod } from './types';
-import { AuthUser } from './types/auth.types';
+import { serviceRequest } from './request.js';
+import { verifyAuthToken } from './signature.js';
+import { ApiKeyParts, ExtendedJwtPayload, HttpMethod } from './types/index.js';
+import { AuthUser } from './types/auth.types.js';
+
+const AUTH_SERVICE_PATHS = {
+  users: '/users'
+};
 
 export class Auth {
   constructor(private apiKeyParts: ApiKeyParts, public authServiceUrl: string) {}
+
+  /**
+   * Validates the provided auth token against the API key secret key.
+   * @param {string} token - The auth token to be validated.
+   * @returns {ExtendedJwtPayload} The decoded JWT payload.
+   * @throws {TokenError} If the token is invalid.
+   */
+  public verifyToken(token: string): ExtendedJwtPayload {
+    const { secretKey } = this.apiKeyParts;
+
+    return verifyAuthToken(token, secretKey);
+  }
 
   /**
    * Get user by client id
@@ -22,20 +38,8 @@ export class Auth {
       }
     };
 
-    const requestUrl = `${this.authServiceUrl}/users/${clientId}`;
+    const requestUrl = `${this.authServiceUrl}${AUTH_SERVICE_PATHS.users}/${clientId}`;
 
     return serviceRequest<AuthUser>(requestUrl, requestParams);
-  }
-
-  /**
-   * Validates the provided auth token against the API key secret key.
-   * @param {string} token - The auth token to be validated.
-   * @returns {ExtendedJwtPayload} The decoded JWT payload.
-   * @throws {TokenError} If the token is invalid.
-   */
-  public verifyToken(token: string): ExtendedJwtPayload {
-    const { secretKey } = this.apiKeyParts;
-
-    return verifyAuthToken(token, secretKey);
   }
 }

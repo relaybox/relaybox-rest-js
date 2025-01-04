@@ -1,5 +1,5 @@
-import { ValidationError } from './errors';
-import { Permissions, Permission, allowedPermissions } from './types/permission.types';
+import { ValidationError } from './errors.js';
+import { Permissions, Permission, allowedPermissions } from './types/permission.types.js';
 
 export function validateParams(params: Record<string, any>, requiredParams: string[]) {
   const missingParams = checkMissingParams(params, requiredParams);

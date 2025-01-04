@@ -3,16 +3,16 @@ import {
   generateHmacSignature,
   serializeData,
   verifyAuthToken
-} from './signature';
-import { request } from './request';
-import { ValidationError } from './errors';
-import { ExtendedJwtPayload } from './types/jwt.types';
-import { PublishResponseData, TokenResponse, TokenResponseParams } from './types/response.types';
-import { ApiKeyParts, RelayBoxOptions } from './types/config.types';
-import { validatePermissions, validateParams } from './validation';
-import { WebhookPayload } from './types/webhook.types';
-import { Rooms } from './rooms';
-import { Auth } from './auth';
+} from './signature.js';
+import { request } from './request.js';
+import { ValidationError } from './errors.js';
+import { ExtendedJwtPayload } from './types/jwt.types.js';
+import { PublishResponseData, TokenResponse, TokenResponseParams } from './types/response.types.js';
+import { ApiKeyParts, RelayBoxOptions } from './types/config.types.js';
+import { validatePermissions, validateParams } from './validation.js';
+import { WebhookPayload } from './types/webhook.types.js';
+import { Rooms } from './rooms.js';
+import { Auth } from './auth.js';
 
 const DEFAULT_CORE_SERVICE_URL = `https://gnet.prod.relaybox-services.net`;
 const DEFAULT_STATE_SERVICE_URL = `https://state.prod.relaybox-services.net`;
