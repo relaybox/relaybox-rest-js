@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import { ExtendedJwtPayload } from './types/jwt.types.js';
-import { SignatureError, TokenError, ValidationError } from './errors.js';
+import { ExtendedJwtPayload } from './types/jwt.types';
+import { SignatureError, TokenError, ValidationError } from './errors';
 import { canonicalize } from 'json-canonicalize';
 
 const JWT_ISSUER = `https://relaybox.net`;

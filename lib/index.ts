@@ -1,6 +1,6 @@
-import RelayBox from './relaybox.js';
+import RelayBox from './relaybox';
 
 export default RelayBox;
 
-export * from './types/index.js';
-export * from './errors.js';
+export * from './types/index';
+export * from './errors';

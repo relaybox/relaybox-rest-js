@@ -1,4 +1,4 @@
-import { Session } from './auth.types.js';
+import { Session } from './auth.types';
 
 export interface WebhookPayload {
   id: string;

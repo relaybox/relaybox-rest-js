@@ -1,4 +1,4 @@
-import { Permissions, Permission } from './permission.types.js';
+import { Permissions, Permission } from './permission.types';
 
 export interface TokenResponseParams {
   clientId?: string | string[];
