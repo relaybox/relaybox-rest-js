@@ -27,8 +27,6 @@
   ],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
-  "type": "module",
   "scripts": {
     "build:types": "tsc --project tsconfig.types.json",
     "build:cjs": "tsc --project tsconfig.cjs.json",
@@ -54,6 +52,11 @@
       "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js"
+    },
+    "./errors": {
+      "types": "./dist/types/errors.d.ts",
+      "import": "./dist/esm/errors.js",
+      "require": "./dist/cjs/errors.js"
     }
   },
   "dependencies": {
