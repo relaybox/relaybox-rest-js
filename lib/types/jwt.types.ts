@@ -1,5 +1,5 @@
 import { JwtPayload } from 'jsonwebtoken';
-import { Permissions, Permission } from './permission.types';
+import { Permissions, Permission } from './permission.types.js';
 
 export interface ExtendedJwtPayload extends JwtPayload {
   publicKey: string;

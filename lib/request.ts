@@ -1,5 +1,5 @@
-import { HTTPRequestError, HTTPServiceError, NetworkError, TimeoutError } from './errors';
-import { ApiData, FormattedResponse } from './types/request.types';
+import { HTTPRequestError, HTTPServiceError, NetworkError, TimeoutError } from './errors.js';
+import { ApiData, FormattedResponse } from './types/request.types.js';
 
 const NODE_FETCH_ERR_MESSAGES = ['Failed to fetch'];
 const DEFAULT_REQUEST_TIMEOUT_MS = 10000;
