@@ -11,6 +11,11 @@ export interface AuthUser {
   blockedAt: string | null;
 }
 
+export interface AuthUserIdentity {
+  id: string;
+  accessToken: string;
+}
+
 export interface Session {
   uid: string;
   appPid: string;

@@ -1,7 +1,7 @@
 import { serviceRequest } from './request.js';
 import { verifyAuthToken } from './signature.js';
 import { ApiKeyParts, ExtendedJwtPayload, HttpMethod } from './types/index.js';
-import { AuthUser } from './types/auth.types.js';
+import { AuthUser, AuthUserIdentity } from './types/auth.types.js';
 
 const AUTH_SERVICE_PATHS = {
   users: '/users'
@@ -41,5 +41,26 @@ export class Auth {
     const requestUrl = `${this.authServiceUrl}${AUTH_SERVICE_PATHS.users}/${clientId}`;
 
     return serviceRequest<AuthUser>(requestUrl, requestParams);
+  }
+
+  /**
+   * Get user by client id
+   * @param clientId user client id
+   * @param authToken auth token to authenticate the request
+   */
+  getUserIdentity(authToken: string, provider: string) {
+    const { publicKey } = this.apiKeyParts;
+
+    const requestParams = {
+      method: HttpMethod.GET,
+      headers: {
+        'X-Ds-Public-Key': publicKey,
+        Authorization: `Bearer ${authToken}`
+      }
+    };
+
+    const requestUrl = `${this.authServiceUrl}${AUTH_SERVICE_PATHS.users}/identity?provider=${provider}`;
+
+    return serviceRequest<AuthUserIdentity>(requestUrl, requestParams);
   }
 }
