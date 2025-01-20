@@ -1,3 +1,4 @@
+export * from './auth.types.js';
 export * from './config.types.js';
 export * from './jwt.types.js';
 export * from './permission.types.js';

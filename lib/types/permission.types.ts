@@ -8,6 +8,7 @@ export const allowedPermissions = [
   'history',
   'intellect',
   'storage',
+  'privacy',
   '*'
 ] as const;
 

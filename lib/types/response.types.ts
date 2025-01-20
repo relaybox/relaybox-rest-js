@@ -14,5 +14,5 @@ export interface TokenResponse {
 
 export interface PublishResponseData {
   timestamp: string;
-  signature: string;
+  requestId: string;
 }
