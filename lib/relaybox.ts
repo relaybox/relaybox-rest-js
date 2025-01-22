@@ -50,6 +50,14 @@ export default class RelayBox {
     this.rooms = new Rooms(this.apiKeyParts, this.coreServiceUrl, this.stateServiceUrl);
   }
 
+  get secretKey() {
+    return this.apiKeyParts.secretKey;
+  }
+
+  get publicKey() {
+    return this.apiKeyParts.publicKey;
+  }
+
   /**
    * Generates a token response with a JWT based on the provided parameters.
    * @param {TokenResponseParams} params - Parameters including clientId, expiry time, and permissions.

@@ -24,7 +24,7 @@ interface MemberActions {
    * Remove member from private room. Private rooms only.
    * @param clientId The clientId of the member to delete
    */
-  // remove: (clientId: string) => Promise<void>;
+  delete: (roomId: string, clientId: string, authToken: string) => Promise<void>;
   /**
    * Set member type for client id.
    * @param clientId The clientId of the member to delete
@@ -112,6 +112,38 @@ export class Rooms {
   }
 
   /**
+   * Create a new room
+   * @param {string} roomId - The name of the room.
+   * @param {string} authToken - The authorization token.
+   * @param {RoomOptions} roomOptions - The options for the room.
+   */
+  async setVisibility(
+    roomId: string,
+    authToken: string,
+    roomOptions: RoomOptions = {}
+  ): Promise<Room> {
+    const { visibility = 'public', password = null } = roomOptions;
+
+    const requestBody = {
+      visibility,
+      password
+    };
+
+    const requestParams: RequestInit = {
+      method: HttpMethod.PUT,
+      body: JSON.stringify(requestBody),
+      headers: {
+        ...defaultHeaders,
+        Authorization: `Bearer ${authToken}`
+      }
+    };
+
+    const requestUrl = `${this.stateServiceUrl}${STATE_SERVICE_PATHS.rooms}/${roomId}/visibility`;
+
+    return serviceRequest<Room>(requestUrl, requestParams);
+  }
+
+  /**
    * Add a user to a private room by client id
    * @param {string} roomId - The name of the room.
    * @param {string} clientId - The client id of the user to add.
@@ -134,6 +166,27 @@ export class Rooms {
     };
 
     const requestUrl = `${this.stateServiceUrl}${STATE_SERVICE_PATHS.rooms}/${roomId}/members`;
+
+    return serviceRequest<any>(requestUrl, requestParams);
+  }
+
+  /**
+   * Delete a user from a private room by client id
+   * @param {string} roomId - The name of the room.
+   * @param {string} clientId - The client id of the user to add.
+   * @param {string} authToken - The authorization token.
+   * @returns
+   */
+  async deleteMember(roomId: string, clientId: string, authToken: string) {
+    const requestParams = {
+      method: HttpMethod.DELETE,
+      headers: {
+        ...defaultHeaders,
+        Authorization: `Bearer ${authToken}`
+      }
+    };
+
+    const requestUrl = `${this.stateServiceUrl}${STATE_SERVICE_PATHS.rooms}/${roomId}/members/${clientId}`;
 
     return serviceRequest<any>(requestUrl, requestParams);
   }
@@ -174,6 +227,7 @@ export class Rooms {
 
   readonly members: MemberActions = {
     add: this.addMember.bind(this),
+    delete: this.deleteMember.bind(this),
     setMemberType: this.setMemberType.bind(this)
   };
 }
