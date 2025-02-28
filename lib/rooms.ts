@@ -181,7 +181,7 @@ export class Rooms {
     const requestParams = {
       method: HttpMethod.DELETE,
       headers: {
-        ...defaultHeaders,
+        // ...defaultHeaders,
         Authorization: `Bearer ${authToken}`
       }
     };
