@@ -14,3 +14,8 @@ export interface Room {
   uuid: string;
   visibility: RoomVisibility;
 }
+
+export interface RoomPublishOptions {
+  clientId?: string;
+  transient?: boolean;
+}

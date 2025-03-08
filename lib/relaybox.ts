@@ -13,6 +13,7 @@ import { validatePermissions, validateParams } from './validation.js';
 import { WebhookPayload } from './types/webhook.types.js';
 import { Rooms } from './rooms.js';
 import { Auth } from './auth.js';
+import { RoomPublishOptions } from './types/rooms.types.js';
 
 const DEFAULT_CORE_SERVICE_URL = `https://gnet.prod.relaybox-services.net`;
 const DEFAULT_STATE_SERVICE_URL = `https://state.prod.relaybox-services.net`;
@@ -104,7 +105,7 @@ export default class RelayBox {
     roomId: string | string[],
     event: string,
     data: any,
-    clientId?: string
+    options: RoomPublishOptions = {}
   ): Promise<PublishResponseData> {
     validateParams({ roomId, event, data }, ['roomId', 'event', 'data']);
 
@@ -112,7 +113,7 @@ export default class RelayBox {
       body: requestBody,
       signature: requestSignature,
       publicKey
-    } = this.prepareRequestParams(roomId, event, data, clientId);
+    } = this.prepareRequestParams(roomId, event, data, options);
 
     const requestParams = {
       method: 'POST',
@@ -143,7 +144,7 @@ export default class RelayBox {
     roomId: string | string[],
     event: string,
     data: any,
-    clientId?: string
+    options: RoomPublishOptions
   ): { body: string; signature: string; publicKey: string } {
     const timestamp = Date.now();
 
@@ -152,7 +153,7 @@ export default class RelayBox {
       roomId,
       data,
       timestamp,
-      clientId
+      options
     });
 
     const { publicKey, secretKey } = this.apiKeyParts;
