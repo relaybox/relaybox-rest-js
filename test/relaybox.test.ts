@@ -121,12 +121,18 @@ describe('RelayBox', () => {
       it('should sucessfully publish an event', async () => {
         vi.useFakeTimers({ now: mockDate.getTime() });
 
+        const publishOptions = {
+          transient: true,
+          clientId: '12345'
+        };
+
         const mockSignature = generateHmacSignature(
           JSON.stringify({
             event: mockEvent,
             roomId: mockRoomid,
             data: mockPayload,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            options: publishOptions
           }),
           mockSecretKey
         );
@@ -144,7 +150,9 @@ describe('RelayBox', () => {
           })
         );
 
-        await expect(relayBox.publish(mockRoomid, mockEvent, mockPayload)).resolves.toEqual(
+        await expect(
+          relayBox.publish(mockRoomid, mockEvent, mockPayload, publishOptions)
+        ).resolves.toEqual(
           expect.objectContaining({
             timestamp: Date.now(),
             signature: mockSignature
