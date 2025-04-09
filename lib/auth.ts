@@ -51,8 +51,6 @@ export class Auth {
   getUserIdentity(authToken: string, provider: string) {
     const { publicKey } = this.apiKeyParts;
 
-    console.log('>>>>>>> authToken', authToken);
-
     const requestParams = {
       method: HttpMethod.GET,
       headers: {
