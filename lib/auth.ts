@@ -38,7 +38,7 @@ export class Auth {
       }
     };
 
-    const requestUrl = `${this.authServiceUrl}${AUTH_SERVICE_PATHS.users}/${clientId}`;
+    const requestUrl = `${this.authServiceUrl}/users/${clientId}`;
 
     return serviceRequest<AuthUser>(requestUrl, requestParams);
   }
@@ -51,6 +51,8 @@ export class Auth {
   getUserIdentity(authToken: string, provider: string) {
     const { publicKey } = this.apiKeyParts;
 
+    console.log('>>>>>>> authToken', authToken);
+
     const requestParams = {
       method: HttpMethod.GET,
       headers: {
@@ -59,7 +61,7 @@ export class Auth {
       }
     };
 
-    const requestUrl = `${this.authServiceUrl}${AUTH_SERVICE_PATHS.users}/identity?provider=${provider}`;
+    const requestUrl = `${this.authServiceUrl}/identity?provider=${provider}`;
 
     return serviceRequest<AuthUserIdentity>(requestUrl, requestParams);
   }
