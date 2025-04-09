@@ -3,10 +3,6 @@ import { verifyAuthToken } from './signature.js';
 import { ApiKeyParts, ExtendedJwtPayload, HttpMethod } from './types/index.js';
 import { AuthUser, AuthUserIdentity } from './types/auth.types.js';
 
-const AUTH_SERVICE_PATHS = {
-  users: '/users'
-};
-
 export class Auth {
   constructor(private apiKeyParts: ApiKeyParts, public authServiceUrl: string) {}
 
